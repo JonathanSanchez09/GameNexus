@@ -6,14 +6,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'];
 
     if (empty($email) || empty($password)) {
-        header("Location: ../html/login.html?error=" . urlencode("Todos los campos son obligatorios."));
+        echo json_encode(["success" => false, "message" => "Todos los campos son obligatorios."]);
         exit();
     }
     
     // Conexión a la base de datos
     $conn = new mysqli("localhost", "root", "", "tienda_videojuegos");
     if ($conn->connect_error) {
-        die("Error en la conexión: " . $conn->connect_error);
+        echo json_encode(["success" => false, "message" => "Error en la conexión a la base de datos."]);
+        exit();
     }
     
     $sql = "SELECT * FROM usuarios WHERE email = ?";
@@ -28,19 +29,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($password, $usuario['password'])) {
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['email'] = $usuario['email'];
-            header("Location: ../html/index.php");
+            echo json_encode(["success" => true]);  // Login exitoso, no rediriges aquí, lo hace JS
             exit();
         } else {
-            header("Location: ../html/login.html?error=" . urlencode("Contraseña incorrecta."));
+            echo json_encode(["success" => false, "message" => "Contraseña incorrecta."]);
             exit();
         }
     } else {
-        header("Location: ../html/login.html?error=" . urlencode("El usuario no existe."));
+        echo json_encode(["success" => false, "message" => "El usuario no existe."]);
         exit();
     }
     
     $conn->close();
     
 } else {
-    echo "Acceso denegado.";
+    echo json_encode(["success" => false, "message" => "Acceso denegado."]);
 }

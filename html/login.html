@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar sesión</title>
   <link rel="stylesheet" href="../css/logins.css">
-  <script src="../js/registro.js" defer></script>
+  <script src="../js/login.js" defer></script>
 </head>
 <body>
   <header class="main-header">
@@ -30,15 +30,8 @@
   </header>
 
   <div class="login-container">
-    <!-- Mensaje de error (si lo hay) -->
-    <?php if (isset($_GET['error'])): ?>
-        <div id="error-message" class="error-message">
-            <p style="color: red;"><?php echo htmlspecialchars($_GET['error']); ?></p>
-        </div>
-    <?php endif; ?>
-
     <h2>Iniciar sesión</h2>
-    <form action="../PHP/login.php" method="POST" class="login-form">
+    <form id="login-form" class="login-form">
       <label for="email">Correo electrónico:</label>
       <input type="email" id="email" name="email" required>
 

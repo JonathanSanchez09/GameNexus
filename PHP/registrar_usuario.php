@@ -1,50 +1,46 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if (empty($username) || empty($email) || empty($password)) {
+        echo json_encode(["success" => false, "message" => "Todos los campos son obligatorios."]);
+        exit();
+    }
+
+    if (strlen($password) < 8) {
+        echo json_encode(["success" => false, "message" => "La contraseña debe tener al menos 8 caracteres."]);
+        exit();
+    }
+
     $conn = new mysqli("localhost", "root", "", "tienda_videojuegos");
 
     if ($conn->connect_error) {
-        die("Error en la conexión: " . $conn->connect_error);
-    }
-
-    $username = trim($_POST['username']);
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm-password'];
-
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-        echo "❌ Todos los campos son obligatorios.";
+        echo json_encode(["success" => false, "message" => "Error en la conexión."]);
         exit();
     }
 
-    if ($password !== $confirm_password) {
-        echo "❌ Las contraseñas no coinciden.";
-        exit();
-    }
-
-    $sql = "SELECT * FROM usuarios WHERE email = ?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $resultado = $stmt->get_result();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        echo json_encode(["success" => false, "message" => "Este correo ya está registrado."]);
+        exit();
+    }
 
-    if ($resultado->num_rows > 0) {
-        echo "❌ Este correo ya está registrado. <a href='../index.html'>Inicia sesión</a>";
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $conn->prepare("INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $username, $email, $hashedPassword);
+
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Usuario registrado con éxito."]);
     } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO usuarios (email, password, username) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $email, $hashed_password, $username);
-
-        if ($stmt->execute()) {
-            // Redirigir al login automáticamente
-            header("Location: ../HTML/login.html");
-            exit();
-        } else {
-            echo "❌ Error al registrar: " . $stmt->error;
-        }
+        echo json_encode(["success" => false, "message" => "Error al registrar el usuario."]);
     }
 
     $conn->close();
 } else {
-    echo "Acceso denegado.";
+    echo json_encode(["success" => false, "message" => "Acceso denegado."]);
 }

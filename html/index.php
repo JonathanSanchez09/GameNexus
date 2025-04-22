@@ -57,7 +57,7 @@ $is_logged_in = isset($_SESSION['usuario_id']);
         <div class="login-link">
             <?php if ($is_logged_in): ?>
                 <!-- Si el usuario está logueado, muestra un mensaje y un enlace para cerrar sesión -->
-                <span>Bienvenido, <?php echo $_SESSION['usuario_id']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
+                <span>Bienvenido, <?php echo $_SESSION['email']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
             <?php else: ?>
                 <!-- Si el usuario no está logueado, muestra el enlace para iniciar sesión -->
                 <a href="login.html">Iniciar sesión</a>
