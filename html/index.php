@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si el usuario está logueado
+$is_logged_in = isset($_SESSION['usuario_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +14,6 @@
     <link rel="stylesheet" href="../css/styles.css"> <!-- Enlace al archivo CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
@@ -33,24 +39,30 @@
     </header>
 
     <nav class="main-nav-container">
-      <div class="main-nav">
-        <a href="#">Inicio</a>
-        <div class="dropdown">
-          <button class="dropbtn">Juegos</button>
-          <div class="dropdown-content">
-            <a href="#">Acción</a>
-            <a href="#">Aventura</a>
-            <a href="#">Estrategia</a>
-            <a href="#">Deportes</a>
-          </div>
+        <div class="main-nav">
+            <a href="#">Inicio</a>
+            <div class="dropdown">
+                <button class="dropbtn">Juegos</button>
+                <div class="dropdown-content">
+                    <a href="#">Acción</a>
+                    <a href="#">Aventura</a>
+                    <a href="#">Estrategia</a>
+                    <a href="#">Deportes</a>
+                </div>
+            </div>
+            <a href="#">Ofertas</a>
+            <a href="#">Reseñas</a>
+            <a href="#">Contacto</a>
         </div>
-        <a href="#">Ofertas</a>
-        <a href="#">Reseñas</a>
-        <a href="#">Contacto</a>
-      </div>
-      <div class="login-link">
-        <a href="./login.html">Iniciar sesión</a>
-      </div>
+        <div class="login-link">
+            <?php if ($is_logged_in): ?>
+                <!-- Si el usuario está logueado, muestra un mensaje y un enlace para cerrar sesión -->
+                <span>Bienvenido, <?php echo $_SESSION['usuario_id']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
+            <?php else: ?>
+                <!-- Si el usuario no está logueado, muestra el enlace para iniciar sesión -->
+                <a href="login.html">Iniciar sesión</a>
+            <?php endif; ?>
+        </div>
     </nav>
 
     <div class="container">
