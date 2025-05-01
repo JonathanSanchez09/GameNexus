@@ -28,15 +28,20 @@ $is_logged_in = isset($_SESSION['usuario_id']);
                 <a href="#">Deportes</a>
             </div>
         </div>
-        <a href="./registrar_juego.php">Agregar Juego</a>
-        <a href="./registrar_resena.php">Agregar Reseña</a>
+        <div class="dropdown">
+            <button class="dropbtn">reseñas</button>
+            <div class="dropdown-content">
+                <a href="./registrar_juego.php">Agregar Juego</a>
+                <a href="./registrar_resena.php">Agregar Reseña</a>
+            </div>
+        </div>
         <a href="#">Contacto</a>
     </div>
     <div class="login-link">
-        <?php if ($is_logged_in): ?>
-            <span>Bienvenido, <?= $_SESSION['email'] ?>!</span> | <a href="logout.php">Cerrar sesión</a>
-        <?php else: ?>
-            <a href="login.html">Iniciar sesión</a>
-        <?php endif; ?>
-    </div>
+            <?php if ($is_logged_in): ?>
+                <span>Bienvenido, <?php echo $_SESSION['email']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
+            <?php else: ?>
+                <a href="login.html">Iniciar sesión</a>
+            <?php endif; ?>
+        </div>
 </nav>

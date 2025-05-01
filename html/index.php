@@ -60,7 +60,13 @@ $resultado = $conn->query($sql);
                     <a href="#">Deportes</a>
                 </div>
             </div>
-            <a href="./registrar_resena.php">Reseñas</a>
+            <div class="dropdown">
+            <button class="dropbtn">reseñas</button>
+            <div class="dropdown-content">
+                <a href="./registrar_juego.php">Agregar Juego</a>
+                <a href="./registrar_resena.php">Agregar Reseña</a>
+            </div>
+        </div>
             <a href="#">Contacto</a>
         </div>
         <div class="login-link">

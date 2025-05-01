@@ -3,6 +3,7 @@ $mensaje = "";
 $tipo_mensaje = ""; // 'exito' o 'error'
 
 // Conexión a la base de datos
+session_start();
 function conectarDB() {
     $conn = new mysqli("localhost", "root", "", "tienda_videojuegos");
     if ($conn->connect_error) {
@@ -64,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <?php include 'encabezado_nav.php'; ?>
