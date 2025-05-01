@@ -3,6 +3,16 @@ session_start();
 
 // Verificar si el usuario está logueado
 $is_logged_in = isset($_SESSION['usuario_id']);
+
+// Conectar a la base de datos
+include '../PHP/conexion.php';
+
+$sql = "SELECT juegos.*, 
+    (SELECT AVG(calificacion) FROM resenas WHERE juego_id = juegos.id) AS calificacion_promedio, 
+    (SELECT COUNT(*) FROM resenas WHERE juego_id = juegos.id) AS cantidad_reseñas 
+    FROM juegos";
+
+$resultado = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +21,7 @@ $is_logged_in = isset($_SESSION['usuario_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda de Videojuegos</title>
-    <link rel="stylesheet" href="../css/styles.css"> <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
@@ -50,16 +60,13 @@ $is_logged_in = isset($_SESSION['usuario_id']);
                     <a href="#">Deportes</a>
                 </div>
             </div>
-            <a href="#">Ofertas</a>
-            <a href="#">Reseñas</a>
+            <a href="./registrar_resena.php">Reseñas</a>
             <a href="#">Contacto</a>
         </div>
         <div class="login-link">
             <?php if ($is_logged_in): ?>
-                <!-- Si el usuario está logueado, muestra un mensaje y un enlace para cerrar sesión -->
                 <span>Bienvenido, <?php echo $_SESSION['email']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
             <?php else: ?>
-                <!-- Si el usuario no está logueado, muestra el enlace para iniciar sesión -->
                 <a href="login.html">Iniciar sesión</a>
             <?php endif; ?>
         </div>
@@ -67,41 +74,37 @@ $is_logged_in = isset($_SESSION['usuario_id']);
 
     <div class="container">
         <h2>Juegos Disponibles</h2>
-
         <div class="games">
-            <div class="game">
-                <img src="https://via.placeholder.com/300x200" alt="Juego 1">
-                <h2>Juego 1</h2>
-                <p>Una breve descripción del juego 1.</p>
-                <div class="reviews">
-                    <p>⭐⭐⭐⭐⭐ (4.5/5) - Reseña general: ¡Increíble!</p>
-                </div>
-            </div>
-            <div class="game">
-                <img src="https://via.placeholder.com/300x200" alt="Juego 2">
-                <h2>Juego 2</h2>
-                <p>Una breve descripción del juego 2.</p>
-                <div class="reviews">
-                    <p>⭐⭐⭐⭐ (4/5) - Reseña general: Muy bueno, pero con algunos fallos.</p>
-                </div>
-            </div>
-            <div class="game">
-                <img src="https://via.placeholder.com/300x200" alt="Juego 3">
-                <h2>Juego 3</h2>
-                <p>Una breve descripción del juego 3.</p>
-                <div class="reviews">
-                    <p>⭐⭐⭐⭐⭐ (5/5) - Reseña general: Perfecto, totalmente recomendado.</p>
-                </div>
-            </div>
-        </div>
+            <?php if ($resultado && $resultado->num_rows > 0): ?>
+                <?php while ($fila = $resultado->fetch_assoc()): ?>
+                    <div class="game">
+                        <img src="<?php echo htmlspecialchars($fila['imagen_url']); ?>" alt="<?php echo htmlspecialchars($fila['nombre']); ?>">
+                        <h2><?php echo htmlspecialchars($fila['nombre']); ?></h2>
+                        <p><?php echo htmlspecialchars($fila['descripcion']); ?></p>
+                        <p><strong>Categoría:</strong> <?php echo htmlspecialchars($fila['categoria']); ?></p>
+                        <p><strong>Precio:</strong> $<?php echo number_format($fila['precio'], 2); ?></p>
 
-        <div class="review-form">
-            <h3>Deja tu reseña</h3>
-            <form id="review-form">
-                <input type="text" id="name" placeholder="Tu nombre" required>
-                <textarea id="review" placeholder="Escribe tu reseña aquí..." required></textarea>
-                <button type="submit">Enviar Reseña</button>
-            </form>
+                        <div class="reviews">
+                            <p>Calificación promedio: <?php echo number_format($fila['calificacion_promedio'], 1); ?> (de <?php echo $fila['cantidad_resenas']; ?> reseñas)</p>
+                            <div class="rating">
+                                <?php
+                                // Generar estrellas basadas en la calificación promedio
+                                $calificacion_promedio = $fila['calificacion_promedio'];
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $calificacion_promedio) {
+                                        echo '⭐'; // Estrella llena
+                                    } else {
+                                        echo '☆'; // Estrella vacía
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No hay juegos disponibles por el momento.</p>
+            <?php endif; ?>
         </div>
     </div>
 

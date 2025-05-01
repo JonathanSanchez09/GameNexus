@@ -26,10 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($resultado->num_rows === 1) {
         $usuario = $resultado->fetch_assoc();
         
-        if (password_verify($password, $usuario['password'])) {
+        // OJO: Cambiar 'password' por 'contraseña'
+        if (password_verify($password, $usuario['contraseña'])) {
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['email'] = $usuario['email'];
-            echo json_encode(["success" => true]);  // Login exitoso, no rediriges aquí, lo hace JS
+            $_SESSION['nombre'] = $usuario['nombre']; // útil para mostrar el nombre del usuario
+            echo json_encode(["success" => true]);
             exit();
         } else {
             echo json_encode(["success" => false, "message" => "Contraseña incorrecta."]);
