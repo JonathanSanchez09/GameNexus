@@ -57,28 +57,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Agregar Juego</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    <?php include 'encabezado_nav.php'; ?>
+<?php
+include 'header.php';
+include 'encabezado_nav.php';
+include '../PHP/conexion.php';?>
 
     <div class="container">
         <h2>Agregar Nuevo Juego</h2>
-
         <?php if (!empty($mensaje)): ?>
-            <div class="mensaje <?= htmlspecialchars($tipo_mensaje) ?>">
-                <?= htmlspecialchars($mensaje) ?>
-            </div>
+            <div class="alerta-mensaje"><?= htmlspecialchars($mensaje) ?></div>
         <?php endif; ?>
-
         <form class="review-form" method="POST" action="">
             <input type="text" name="nombre" placeholder="Nombre del juego" required>
             <textarea name="descripcion" placeholder="Descripción del juego" required></textarea>
@@ -97,8 +85,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Tienda de Videojuegos. Todos los derechos reservados.</p>
-    </footer>
-</body>
-</html>
+    <?php include 'footer.php'; ?>

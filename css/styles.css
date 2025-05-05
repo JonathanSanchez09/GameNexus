@@ -63,6 +63,8 @@ header .social-media img:hover {
   filter: drop-shadow(0 0 8px #00c3ff);
 }
 
+
+
 /* Navigation */
 .main-nav {
   background-color: #000;
@@ -221,6 +223,26 @@ header .social-media img:hover {
   background-color: #00e6b8;
 }
 
+.review-form select {
+  background-color: #121212;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.review-form select option {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+
+
+
+
 footer {
   background-color: #111;
   padding: 15px 0;
@@ -269,14 +291,6 @@ footer {
   box-shadow: 0 0 10px #00ffcc;
 }
 
-.mensaje {
-  padding: 10px;
-  margin: 15px 0;
-  border-radius: 8px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .exito {
   background-color: #d4edda;
   color: #155724;
@@ -290,6 +304,53 @@ footer {
 }
 
 .rating {
-  font-size: 1.2em;
-  color: gold;
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  color: #00ffff;
+}
+
+.rating div {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+}
+
+.rating input[type="radio"] {
+  display: none;
+}
+
+.rating label {
+  font-size: 1.8em;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+/* Estilo para las estrellas */
+.rating input[type="radio"]:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #00ffff;
+}
+
+/* Invertimos el orden de los inputs y labels para aplicar bien el hover */
+.rating div {
+  flex-direction: row-reverse;
+}
+
+.rating label::before {
+  content: "★";
+}
+
+
+.alerta-mensaje {
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #222;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  font-weight: bold;
 }

@@ -1,5 +1,5 @@
 <?php
-// Eliminar la llamada a session_start() aquí
+// Verificar si el usuario está logueado, la sesión ya debe haber sido iniciada en 'header.php'
 $is_logged_in = isset($_SESSION['usuario_id']);
 ?>
 
@@ -29,7 +29,7 @@ $is_logged_in = isset($_SESSION['usuario_id']);
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">reseñas</button>
+            <button class="dropbtn">Reseñas</button>
             <div class="dropdown-content">
                 <a href="./registrar_juego.php">Agregar Juego</a>
                 <a href="./registrar_resena.php">Agregar Reseña</a>
@@ -38,10 +38,10 @@ $is_logged_in = isset($_SESSION['usuario_id']);
         <a href="#">Contacto</a>
     </div>
     <div class="login-link">
-            <?php if ($is_logged_in): ?>
-                <span>Bienvenido, <?php echo $_SESSION['email']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
-            <?php else: ?>
-                <a href="login.html">Iniciar sesión</a>
-            <?php endif; ?>
-        </div>
+        <?php if ($is_logged_in): ?>
+            <span>Bienvenido, <?php echo $_SESSION['email']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
+        <?php else: ?>
+            <a href="login.html">Iniciar sesión</a>
+        <?php endif; ?>
+    </div>
 </nav>
