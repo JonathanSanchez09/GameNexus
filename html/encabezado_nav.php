@@ -35,7 +35,7 @@ $is_logged_in = isset($_SESSION['usuario_id']);
                 <a href="./registrar_resena.php">Agregar Reseña</a>
             </div>
         </div>
-        <a href="#">Contacto</a>
+        <a href="./soporte.php">Contacto</a>
     </div>
     <div class="login-link">
         <?php if ($is_logged_in): ?>

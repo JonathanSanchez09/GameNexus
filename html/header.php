@@ -13,6 +13,7 @@ $is_logged_in = isset($_SESSION['usuario_id']);
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <script src="../js/validacion_resena.js" defer></script>
     <script src="../js/validacion_juego.js" defer></script>
+    <script src="../js/validacion_soporte.js" defer></script>
 
 </head>
 <body>

@@ -64,9 +64,6 @@ include '../PHP/conexion.php';?>
 
     <div class="container">
         <h2>Agregar Nuevo Juego</h2>
-        <?php if (!empty($mensaje)): ?>
-            <div class="alerta-mensaje"><?= htmlspecialchars($mensaje) ?></div>
-        <?php endif; ?>
         <form class="review-form" method="POST" action="">
             <input type="text" name="nombre" placeholder="Nombre del juego" required>
             <textarea name="descripcion" placeholder="Descripción del juego" required></textarea>

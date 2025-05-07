@@ -12,6 +12,9 @@ $is_logged_in = isset($_SESSION['usuario_id']);
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="../js/validacion_resena.js" defer></script>
+    <script src="../js/validacion_juego.js" defer></script>
+    <script src="../js/validacion_soporte.js" defer></script>
 </head>
 <body>
 
@@ -47,7 +50,7 @@ $is_logged_in = isset($_SESSION['usuario_id']);
                 <a href="../html/registrar_resena.php">Agregar Reseña</a>
             </div>
         </div>
-        <a href="#">Contacto</a>
+        <a href="../HTML/soporte.php">Contacto</a>
     </div>
     <div class="login-link">
         <?php if ($is_logged_in): ?>
