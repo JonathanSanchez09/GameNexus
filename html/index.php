@@ -17,7 +17,7 @@ $resultado = $conn->query($sql);
         <?php if ($resultado && $resultado->num_rows > 0): ?>
             <?php while ($fila = $resultado->fetch_assoc()): ?>
                 <div class="game">
-                    <a href="../PHP/recomendaciones.php?juego_id=<?php echo $fila['id']; ?>">
+                    <a href="recomendaciones.php?juego_id=<?php echo $fila['id']; ?>">
                         <img src="<?php echo htmlspecialchars($fila['imagen_url']); ?>" alt="<?php echo htmlspecialchars($fila['nombre']); ?>">
                     </a>
                     <h2><?php echo htmlspecialchars($fila['nombre']); ?></h2>

@@ -1,6 +1,7 @@
 <?php
 include 'header.php';
-include 'conexion.php';
+include 'encabezado_nav.php';
+include '../PHP/conexion.php';
 
 if (!isset($_GET['juego_id'])) {
     echo "<div class='container'><p class='mensaje error'>ID del juego no proporcionado.</p></div>";
