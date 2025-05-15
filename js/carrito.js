@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Manejar clics para eliminar y vaciar el carrito
     document.addEventListener("click", function(event) {
         if (event.target.classList.contains("remove-item")) {
             event.preventDefault();
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Función general para actualizar el carrito
 function actualizarCarrito(tipo, valor) {
     const data = new FormData();
     data.append(tipo, valor);
@@ -22,6 +20,8 @@ function actualizarCarrito(tipo, valor) {
     })
     .then(response => response.json())
     .then(data => {
+        console.log(data); // Para depurar
+
         if (data.html) {
             actualizarVistaCarrito(data);
             mostrarMensaje(tipo === "vaciar" ? "✅ Carrito vaciado correctamente." : "✅ Juego eliminado del carrito.", "green");
@@ -35,18 +35,32 @@ function actualizarCarrito(tipo, valor) {
     });
 }
 
-// Actualizar la vista del carrito
 function actualizarVistaCarrito(data) {
     const carritoContenido = document.getElementById("carrito-contenido");
     const totalCarrito = document.getElementById("total-carrito");
+    const botonVaciar = document.getElementById("vaciar-carrito");
+    const botonPagar = document.querySelector("a[href='pagar.php']");
+    const cartCount = document.getElementById("cart-count");
 
-    carritoContenido.innerHTML = data.html;
-    totalCarrito.textContent = '$' + data.total.toFixed(2);
+    if (carritoContenido) carritoContenido.innerHTML = data.html;
+
+    if (totalCarrito) totalCarrito.textContent = '$' + data.total.toFixed(2);
+
+    if (botonVaciar) botonVaciar.style.pointerEvents = (data.total === 0) ? 'none' : 'auto';
+    if (botonVaciar) botonVaciar.style.opacity = (data.total === 0) ? 0.5 : 1;
+    if (botonPagar) botonPagar.style.pointerEvents = (data.total === 0) ? 'none' : 'auto';
+    if (botonPagar) botonPagar.style.opacity = (data.total === 0) ? 0.5 : 1;
+
+    if (cartCount) {
+        const totalItems = data.carrito ? Object.values(data.carrito).reduce((acc, item) => acc + item.cantidad, 0) : 0;
+        cartCount.textContent = totalItems;
+    }
 }
 
-// Mostrar mensaje de confirmación o error
 function mostrarMensaje(texto, color) {
     const container = document.querySelector(".container");
+    if (!container) return;
+
     const msg = document.createElement("div");
     msg.className = "alerta-mensaje";
     msg.style.color = color;

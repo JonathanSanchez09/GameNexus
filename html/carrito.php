@@ -2,6 +2,11 @@
 session_start();
 include 'header.php';
 include 'encabezado_nav.php';
+
+// Función para calcular el total del carrito
+function calcularTotal() {
+    return array_reduce($_SESSION['carrito'] ?? [], fn($total, $item) => $total + ($item['precio'] * $item['cantidad']), 0);
+}
 ?>
 
 <div class="container">
@@ -12,8 +17,8 @@ include 'encabezado_nav.php';
             <div class="games">
                 <?php foreach ($_SESSION['carrito'] as $id => $item): ?>
                     <div class="game" data-id="<?= $id ?>">
-                        <img src="<?= $item['imagen'] ?>" alt="<?= $item['nombre'] ?>">
-                        <h2><?= $item['nombre'] ?></h2>
+                        <img src="<?= htmlspecialchars($item['imagen']) ?>" alt="<?= htmlspecialchars($item['nombre']) ?>">
+                        <h2><?= htmlspecialchars($item['nombre']) ?></h2>
                         <p><strong>Precio:</strong> $<?= number_format($item['precio'], 2) ?></p>
                         <p><strong>Cantidad:</strong> <?= $item['cantidad'] ?></p>
                         <a href="#" class="remove-item add-to-cart" data-id="<?= $id ?>">❌ Eliminar</a>
@@ -31,11 +36,4 @@ include 'encabezado_nav.php';
     </div>
 </div>
 
-<?php
-// Función para calcular el total del carrito
-function calcularTotal() {
-    return array_reduce($_SESSION['carrito'] ?? [], fn($total, $item) => $total + ($item['precio'] * $item['cantidad']), 0);
-}
-
-include 'footer.php';
-?>
+<?php include 'footer.php'; ?>
