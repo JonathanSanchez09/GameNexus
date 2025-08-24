@@ -16,6 +16,8 @@ $is_logged_in = isset($_SESSION['usuario_id']);
     <script src="../js/validacion_soporte.js" defer></script>
     <script src="../js/carrito.js" defer></script>
     <script src="../js/pago.js" defer></script>
+    <script src="../js/perfil.js" defer></script>
+
 
 </head>
 <body>

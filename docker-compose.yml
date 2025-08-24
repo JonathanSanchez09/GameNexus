@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  web:
+    # La ruta de construcción debe apuntar a la carpeta donde está tu Dockerfile de PHP
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    # Montas los volúmenes en el lugar correcto del contenedor
+    volumes:
+      - ./html:/var/www/html/
+      - ./php:/var/www/html/php/
+      - ./js:/var/www/html/js/
+      - ./css:/var/www/html/css/
+      - ./img:/var/www/html/img/
+    depends_on:
+      - db
+    networks:
+      - red-interna
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: tienda_videojuegos
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contrasena
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d
+    networks:
+      - red-interna
+
+  recomendador:
+    # La ruta de construcción apunta a la carpeta "python"
+    build:
+      context: ./python
+    # El servicio depende de la base de datos para funcionar
+    depends_on:
+      - db
+    networks:
+      - red-interna
+    # Modificación: Cambia el comando por un bucle que se ejecuta cada 24 horas (86400 segundos)
+    command: sh -c "while true; do python generar_recomendaciones.py; sleep 86400; done"
+    restart: on-failure
+
+volumes:
+  db_data:
+
+networks:
+  red-interna:

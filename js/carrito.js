@@ -14,7 +14,7 @@ function actualizarCarrito(tipo, valor) {
     const data = new FormData();
     data.append(tipo, valor);
 
-    fetch('../PHP/actualizar_carrito.php', {
+    fetch('/php/actualizar_carrito.php', {
         method: 'POST',
         body: data
     })

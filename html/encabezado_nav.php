@@ -1,11 +1,13 @@
 <?php
-// Verificar si el usuario está logueado, la sesión ya debe haber sido iniciada en 'header.php'
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $is_logged_in = isset($_SESSION['usuario_id']);
 ?>
 
 <header class="main-header">
     <div class="contact-info">
-        <span>📧 <a href="mailto:contacto@tiendavideojuegos.com">contacto@tiendavideojuegos.com</a></span>
+        <span>📧 <a href="mailto:contacto@gamenexus.com">contacto@gamenexus.com</a></span>
         <span>📞 <a href="tel:+123456789">+52 33 1846 1351</a></span>
     </div>
     <div class="social-media">
@@ -18,33 +20,44 @@ $is_logged_in = isset($_SESSION['usuario_id']);
 
 <nav class="main-nav-container">
     <div class="main-nav">
+        <!-- CAMBIO: Ahora el logo redirige al mini-juego -->
+        <a href="chat.php" class="logo-link">
+            <img src="/img/logo.png" alt="GameNexus Logo" class="header-logo">
+        </a>
         <a href="index.php">Inicio</a>
         <div class="dropdown">
             <button class="dropbtn">Juegos</button>
             <div class="dropdown-content">
-                <a href="juegos_categoria.php?categoria=Acción">Acción</a>
+                <a href="juegos_categoria.php?categoria=Accion">Acción</a>
                 <a href="juegos_categoria.php?categoria=Aventura">Aventura</a>
                 <a href="juegos_categoria.php?categoria=Estrategia">Estrategia</a>
                 <a href="juegos_categoria.php?categoria=Deportes">Deportes</a>
             </div>
         </div>
-        <div class="dropdown">
-            <button class="dropbtn">Reseñas</button>
-            <div class="dropdown-content">
-                <a href="./registrar_juego.php">Agregar Juego</a>
-                <a href="./registrar_resena.php">Agregar Reseña</a>
-            </div>
-        </div>
-        <a href="./soporte.php">Contacto</a>
-    </div>
-    <div class="login-link">
-        <a href="carrito.php" class="cart-link" id="icono-carrito">
-            🛒 (<span id="cart-count"><?php echo isset($_SESSION['carrito']) ? array_sum(array_column($_SESSION['carrito'], 'cantidad')) : 0; ?></span>)
-        </a>
+        <a href="soporte.php">Contacto</a>
+        <form class="search-form" action="buscar.php" method="GET">
+            <input type="text" name="q" placeholder="Buscar juegos..." required>
+            <button type="submit">🔍</button>
+        </form>
+        
         <?php if ($is_logged_in): ?>
-            <span>Bienvenido, <?php echo $_SESSION['email']; ?>!</span> | <a href="../PHP/logout.php">Cerrar sesión</a>
+            <a href="./registrar_resena.php">Agregar Reseña</a>
+            <a href="./registrar_juego.php">Agregar Juego</a>
+
+            <div class="dropdown">
+                <button class="dropbtn user-menu-btn">
+                    Bienvenido, <?php echo htmlspecialchars($_SESSION['email']); ?>!
+                </button>
+                <div class="dropdown-content">
+                    <a href="perfil.php">👤 Mi perfil</a>
+                    <a href="carrito.php">🛒 Mi carrito</a>
+                    <a href="./php/logout.php">🚪 Cerrar sesión</a>
+                </div>
+            </div>
         <?php else: ?>
-            <a href="login.html">Iniciar sesión</a>
+            <div class="login-link">
+                <a href="login.html">Iniciar sesión</a>
+            </div>
         <?php endif; ?>
     </div>
 </nav>

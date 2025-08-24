@@ -1,2 +1,0 @@
-# modular
-Proyecto Modular

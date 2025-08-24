@@ -1,0 +1,17 @@
+# Usa una imagen ligera oficial de Python
+FROM python:3.10-slim
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia el archivo de requerimientos
+COPY requirements.txt .
+
+# Instala las dependencias necesarias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el código fuente (tu script y demás archivos)
+COPY generar_recomendaciones.py .
+
+# Comando para ejecutar el script de recomendaciones
+CMD ["python", "generar_recomendaciones.py"]

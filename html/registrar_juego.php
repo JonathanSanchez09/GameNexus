@@ -5,7 +5,7 @@ $tipo_mensaje = ""; // 'exito' o 'error'
 // Conexión a la base de datos
 session_start();
 function conectarDB() {
-    $conn = new mysqli("localhost", "root", "", "tienda_videojuegos");
+    $conn = new mysqli("db", "usuario", "contrasena", "tienda_videojuegos");
     if ($conn->connect_error) {
         die("Hubo un error al conectar a la base de datos.");
     }
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 include 'header.php';
 include 'encabezado_nav.php';
-include '../PHP/conexion.php';?>
+include('./php/conexion.php');?>
 
     <div class="container">
         <h2>Agregar Nuevo Juego</h2>

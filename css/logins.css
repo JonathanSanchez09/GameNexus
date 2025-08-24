@@ -129,6 +129,14 @@ body {
     color: #00e6b8;
   }
   
+    /* Nuevo estilo para el logo de login */
+  .login-logo {
+    display: block; /* Para que ocupe su propia línea y los márgenes automáticos funcionen */
+    width: 200px; /* Ajusta el ancho según lo necesites */
+    height: auto; /* Mantiene la proporción original de la imagen */
+    margin: 0 auto 50px auto; /* Centra horizontalmente y añade un margen inferior */
+  }
+  
   /* Footer */
   footer {
     background-color: #111;
@@ -139,4 +147,4 @@ body {
     border-top: 1px solid #00ffcc;
     margin-top: 40px;
   }
-  
+

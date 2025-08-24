@@ -39,11 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Deshabilitar el botón para evitar envíos múltiples
     registerButton.disabled = true;
 
-    // Envío con fetch
-    fetch("../PHP/registrar_usuario.php", {
+    fetch("/php/registrar_usuario.php", {
       method: "POST",
       body: new URLSearchParams({
         username,
@@ -56,13 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
       mostrarMensaje(data.message, data.success ? "green" : "red");
 
       if (data.success) {
-        // Limpiar los campos después del registro exitoso
         form.reset();
         setTimeout(() => {
-          window.location.href = "./login.html";  // Redirigir al login
+          window.location.href = "./login.html";
         }, 2000);
       } else {
-        // Rehabilitar el botón si hay un error
         registerButton.disabled = false;
       }
     });

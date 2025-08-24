@@ -20,7 +20,7 @@ foreach ($_SESSION['carrito'] as $item) {
     <h2>Procesar Pago</h2>
     <p>Total a pagar: <strong>$<?php echo number_format($total, 2); ?></strong></p>
 
-    <form class="review-form" action="../PHP/procesar_pago.php" method="post" id="formPago">
+    <form class="review-form" action="../php/procesar_pago.php" method="post" id="formPago">
         <!-- Datos personales -->
         <input type="text" name="nombre" placeholder="Nombre Completo" required>
         <input type="email" name="email" placeholder="Correo Electrónico" required>

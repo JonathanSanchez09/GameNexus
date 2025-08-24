@@ -4,9 +4,9 @@ import mysql.connector
 
 # Configura tus datos de conexión MySQL
 conexion = mysql.connector.connect(
-    host="localhost",
+    host="db",
     user="root",
-    password="",  # Cambia aquí tu contraseña
+    password="rootpass",  # Cambia aquí tu contraseña
     database="tienda_videojuegos"
 )
 

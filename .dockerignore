@@ -1,0 +1,5 @@
+.git
+*.zip
+*.md
+*.py
+python/

@@ -24,7 +24,7 @@ $mensaje = $_GET['mensaje'] ?? '';
 
     <p>¿Tienes un problema o una duda? Rellena el siguiente formulario y te ayudaremos lo antes posible.</p>
 
-    <form class="review-form" method="POST" action="../PHP/procesar_soporte.php">
+    <form class="review-form" method="POST" action="../php/procesar_soporte.php">
         <input type="text" name="nombre" placeholder="Tu nombre" required>
         <input type="email" name="email" placeholder="Tu correo electrónico" required>
         <select name="motivo" required>
