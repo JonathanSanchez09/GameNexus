@@ -28,12 +28,12 @@ include('./php/procesar_resena.php'); // contiene la lógica de procesamiento
                 // Asumiendo que $juegos_result se obtiene en procesar_resena.php
                 if (isset($juegos_result) && $juegos_result && $juegos_result->num_rows > 0): ?>
                     <?php while ($juego = $juegos_result->fetch_assoc()): ?>
-                        <option value="<?= $juego['id'] ?>"><?= htmlspecialchars($juego['nombre']) ?></option>
+                        <option value="<?= htmlspecialchars($juego['id']) ?>"><?= htmlspecialchars($juego['nombre']) ?></option>
                     <?php endwhile; ?>
                 <?php endif; ?>
             </select>
 
-            <textarea name="comentario" placeholder="Tu reseña" required></textarea>
+            <textarea name="comentario" placeholder="Tu reseña" required><?= isset($_POST['comentario']) ? htmlspecialchars($_POST['comentario']) : '' ?></textarea>
 
             <div class="rating">
                 <label>Calificación:</label>

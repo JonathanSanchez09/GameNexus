@@ -13,7 +13,7 @@ if (empty($userMessage)) {
 }
 
 // Configura tu clave de API de Groq
-$apiKey = getenv('GROQ_API_KEY');
+$apiKey = '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';
 
 // URL del endpoint de la API de Groq
 $url = 'https://api.groq.com/openai/v1/chat/completions';

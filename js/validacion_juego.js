@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (form) {
         form.addEventListener("submit", function (e) {
+            // ... (código existente de captura de variables) ...
             const nombre = form.querySelector("input[name='nombre']").value.trim();
             const descripcion = form.querySelector("textarea[name='descripcion']").value.trim();
             const categoria = form.querySelector("select[name='categoria']").value;
@@ -13,15 +14,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!nombre) errores.push("El nombre es obligatorio.");
             if (!descripcion) errores.push("La descripción es obligatoria.");
+            
+            // ✅ Validación de Categoría: Asegura que se seleccione una opción no vacía
             if (!categoria) errores.push("Selecciona una categoría.");
+            
             if (isNaN(precio) || precio < 0) errores.push("El precio debe ser un número mayor o igual a 0.");
-            if (!imagen || !/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(imagen)) {
-                errores.push("La URL de la imagen no es válida.");
+            
+            // Mejora en la validación de URL para ser más permisiva pero aún útil
+            if (!imagen || !/^https?:\/\/.+/i.test(imagen)) {
+                 errores.push("La URL de la imagen no es válida o está vacía.");
             }
 
             if (errores.length > 0) {
                 e.preventDefault();
-                alert(errores.join("\n"));
+                alert("Errores de validación:\n" + errores.join("\n"));
             }
         });
     }
